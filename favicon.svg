@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Apple-style rounded dark app icon background -->
+  <rect width="32" height="32" rx="7" fill="#1c1c1e" />
+  <!-- Minimalist calculator screen and button grid -->
+  <rect x="8" y="9" width="16" height="3" rx="1.5" fill="#ff9f0a" />
+  <rect x="8" y="15" width="16" height="3" rx="1.5" fill="#ffffff" />
+  <rect x="8" y="21" width="7" height="3" rx="1.5" fill="#ffffff" />
+  <rect x="17" y="21" width="7" height="3" rx="1.5" fill="#ffffff" />
+</svg>

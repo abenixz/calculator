@@ -1,116 +1,163 @@
 @font-face {
     font-family: 'GoogleSans';
-    src: url('./fonts/GoogleSans-VariableFont_GRAD\,opsz\,wght.ttf') format('truetype');
+    src: url('GoogleSans-VariableFont_GRAD\,opsz\,wght.ttf') format('truetype');
     font-weight: 100 900;
 }
 
 body {
-    font-family: 'GoogleSans',system-ui,'Segoe UI', sans-serif;
+    font-family: 'GoogleSans', system-ui, 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    justify-content: space-between;
+    background-color: #fefbef;
+
 }
- 
-
-
 
 .main-container {
-    background-color: #ffffff;
     padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    padding-top: 40px;
+    
 }
 
 .calculator-container {
-    max-width: 350px;
+    max-width: 390px;
     min-width: 280px;
-    max-height:500px;
+    max-height: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: center;    
-
+    justify-content: center;
+    padding-top: 20px;
 }
 
 .result-display {
-    height: 100px;
-    
+    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
     padding: 5px;
     box-sizing: border-box;
-    word-break: break-all;       
-    overflow-wrap: break-word;   
-    text-align: right;           
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-align: right;
     max-width: 100%;
     background-color: #505050;
     color: #ffffff;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    
 }
+
 .mini-display {
-    height: 40px;
+    height: 50px;
     width: 100%;
-    font-family: 'GoogleSans',system-ui,'Segoe UI', sans-serif;
+    font-family: 'GoogleSans', system-ui, 'Segoe UI', sans-serif;
     font-size: 1rem;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    
+    color: #d3d2d2;
+    padding-right: 10px;
 }
+
 .active-display {
-    height: 60px;
+    height: 70px;
     width: 100%;
-    font-family: 'GoogleSans',system-ui,'Segoe UI', sans-serif;
-    font-size: 2rem;
+    font-family: 'GoogleSans', system-ui, 'Segoe UI', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 50;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    padding-right: 10px;
 }
+
 .calculator-grid {
-    max-width: 400px;
+    max-width: 580px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 5px;
     box-sizing: border-box;
-    background-color: #efeeee;
 }
 
 .btn {
-    flex: 0 0 calc((100% - 30px) / 4);
-    height: calc((100% - 40px) / 4);
+    flex: 0 0 25%;
     box-sizing: border-box;
-    height: 70px;
-    font-family: 'GoogleSans',system-ui,'Segoe UI', sans-serif;
-    font-size: 1.2rem;
-    color: #000000;
-    border: solid 0.5px;
-    border-radius: 5px;
+    height: 85px;
+    font-family: 'GoogleSans', system-ui, 'Segoe UI', sans-serif;
+    font-size: 1.4rem;
+    color: #ebebeb;
+    border: solid 0.1px #505050;
     cursor: pointer;
     font-weight: bold;
-    
+    background-color: #7b7b7b;
 }
 
-.button-clear,
+.btn:hover {
+    background-color: #656565;
+}
+
+.button-clear {
+    flex: 1 1 calc(((100% - 30px) / 6) * 2 + 10px);
+    background-color: #616161;
+    color: #ebebeb;
+}
+
 .button-backspace {
     flex: 1 1 calc(((100% - 30px) / 6) * 2 + 10px);
-    background-color: #d3d1d1;
-    color: #616161;
-    border-radius: 5px;
-    border: none;
-    
+    background-color: #616161;
+    color: #ebebeb;
+}
+
+.button-clear:hover,
+.button-backspace:hover {
+    background-color: #565656;
+    ;
 }
 
 .button-equal {
     flex: 1 1 calc((100% - 30px) / 4);
+    background-color: #ff9e08;
+    color: #ebebeb;
+    font-size: 25px;
+    border-bottom-right-radius: 20px;
 }
 
-/* operator color = #ff9e08
-number color = #7b7b7b
-display color = #505050
-clear and delete buttons color = #616161
-calculator text color = #ebebeb
+.button-equal:hover {
+    background-color: #ea8e03;
+}
+
+.button-add,
+.button-subtract,
+.button-divide,
+.button-multiply {
+    background-color: #ff9e08;
+    color: #ebebeb;
+    font-size: 25px;
+}
+
+.button-add:hover,
+.button-subtract:hover,
+.button-divide:hover,
+.button-multiply:hover,
+.button-equal:hover {
+    background-color: #ea8e03;
+}
+
+.button-0 {
+    border-bottom-left-radius: 20px;
+}
+p {
+    color: #6a6a6a;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: #636262;
+    font-weight: 500
+}

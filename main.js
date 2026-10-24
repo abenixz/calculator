@@ -8,12 +8,12 @@ function multiply(a, b) {
     return a * b;
 };
 function divide(a, b) {
-    if (a !== 0 && b == 0) {
+    if (a !== 0 && b === 0) {
         return "Can't divid by zero";
-    } else if (a == 0 && b == 0) {
+    } else if (a === 0 && b === 0) {
         return "Undefined";
     } else {
-        a / b;
+        return a / b;
     }
 }
 
@@ -55,6 +55,33 @@ function operate(operator, inputNum1, inputNum2) {
     }
 };
 
+function formatToDisplay(value) {
+    if (!value || value === '-' || isNaN(value)) return value;
+    let parts = value.toString().split('.');
+    parts[0] = Number(parts[0]).toLocaleString(); // Adds commas to the whole number part
+    return parts.join('.'); // Keeps the decimal portion safe (e.g., "1,234.56")
+}
+
+function appendToActiveNumber(val) {
+    if (isError) return;
+    if (operatorSelected == false) {
+        if (isCalculated == true) {
+            isCalculated = false;
+            firstNumber = '';
+        }
+        if (firstNumber.length < MAX_DIGITS) {
+            firstNumber += val;
+            activeDisplay.textContent = formatToDisplay(firstNumber);
+        }
+    } else {
+        if (secondNumber.length < MAX_DIGITS) {
+            secondNumber += val;
+            activeDisplay.textContent = formatToDisplay(secondNumber);
+        }
+    }
+}
+
+
 
 let calcNum0 = document.querySelector(".button-0");
 let calcNum1 = document.querySelector(".button-1");
@@ -85,189 +112,35 @@ let miniDisplay = document.querySelector(".mini-display");
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
         case '0':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum0.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum0.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('0');
             break;
         case '1':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum1.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum1.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('1');
             break;
         case '2':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum2.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum2.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('2');
             break;
-
         case '3':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum3.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum3.textContent;
-            }
+            appendToActiveNumber('3');
             break;
         case '4':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum4.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum4.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('4');
             break;
         case '5':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum5.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum5.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('5');
             break;
         case '6':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum6.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum6.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('6');
             break;
         case '7':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum7.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum7.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('7');
             break;
         case '8':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum8.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum8.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('8');
             break;
         case '9':
-            if (isError) return;
-            if (operatorSelected == false) {
-                if (isCalculated == true) {
-                    isCalculated = false;
-                    activeDisplay.textContent = '';
-                    firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
-                } else {
-                    firstNumber += calcNum9.textContent;
-                    activeDisplay.textContent = firstNumber;
-                }
-
-            } else {
-                activeDisplay.textContent = '';
-                secondNumber += calcNum9.textContent;
-                activeDisplay.append(secondNumber);
-            }
+            appendToActiveNumber('9');
             break;
-
         case '+':
             if (isError) return;
 
@@ -278,8 +151,8 @@ window.addEventListener('keydown', (e) => {
                 result = operate(operatorChoosen, firstNumber, secondNumber);
                 firstNumber = result;
                 operatorSelected = true;
-                activeDisplay.textContent = result;
-                miniDisplay.textContent = ` ${firstNumber} ${buttonAdd.textContent} `;
+                activeDisplay.textContent = formatToDisplay(result);
+                miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent} `;
                 secondNumber = '';
                 isCalculated = true;
 
@@ -287,7 +160,7 @@ window.addEventListener('keydown', (e) => {
                 operatorChoosen = operators.add;
                 operatorSelected = true;
                 miniDisplay.textContent = "";
-                miniDisplay.append(firstNumber);
+                miniDisplay.append(formatToDisplay(firstNumber));
                 miniDisplay.append(buttonAdd.textContent);
             }
             break;
@@ -300,15 +173,15 @@ window.addEventListener('keydown', (e) => {
 
                 firstNumber = result;
                 operatorSelected = true;
-                activeDisplay.textContent = result;
-                miniDisplay.textContent = ` ${firstNumber} ${buttonSubtract.textContent} `;
+                activeDisplay.textContent = formatToDisplay(result);
+                miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent} `;
                 secondNumber = '';
                 isCalculated = true;
             } else {
                 operatorChoosen = operators.subtract;
                 operatorSelected = true;
                 miniDisplay.textContent = "";
-                miniDisplay.append(firstNumber);
+                miniDisplay.append(formatToDisplay(firstNumber));
                 miniDisplay.append(buttonSubtract.textContent);
             }
             break;
@@ -320,16 +193,16 @@ window.addEventListener('keydown', (e) => {
                 result = operate(operatorChoosen, firstNumber, secondNumber);
                 firstNumber = result;
                 operatorSelected = true;
-                activeDisplay.textContent = result;
+                activeDisplay.textContent = formatToDisplay(result);
                 miniDisplay.textContent = "";
-                miniDisplay.textContent = ` ${firstNumber} ${buttonMultiply.textContent} `;
+                miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent} `;
                 secondNumber = "";
                 isCalculated = true;
             } else {
                 operatorChoosen = operators.multiply;
                 operatorSelected = true;
                 miniDisplay.textContent = "";
-                miniDisplay.append(firstNumber);
+                miniDisplay.append(formatToDisplay(firstNumber));
                 miniDisplay.append(buttonMultiply.textContent);
             }
             break;
@@ -341,15 +214,15 @@ window.addEventListener('keydown', (e) => {
                 result = operate(operatorChoosen, firstNumber, secondNumber);
                 firstNumber = result;
                 operatorSelected = true;
-                activeDisplay.textContent = result;
-                miniDisplay.textContent = ` ${firstNumber} ${buttonDivide.textContent} `;
+                activeDisplay.textContent = formatToDisplay(result);
+                miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonDivide.textContent} `;
                 secondNumber = "";
                 isCalculated = true;
             } else {
                 operatorChoosen = operators.divide;
                 operatorSelected = true;
                 miniDisplay.textContent = "";
-                miniDisplay.append(firstNumber);
+                miniDisplay.append(formatToDisplay(firstNumber));
                 miniDisplay.append(buttonDivide.textContent);
             }
             break;
@@ -362,17 +235,17 @@ window.addEventListener('keydown', (e) => {
                     isCalculated = false;
                     activeDisplay.textContent = '';
                     firstNumber = result;
-                    activeDisplay.textContent = firstNumber;
+                    activeDisplay.textContent = formatToDisplay(firstNumber);
                 } else {
                     if (firstNumber.includes('.')) {
                         return;
                     } else if (firstNumber === '') {
                         firstNumber = '0';
                         firstNumber += buttonPeriod.textContent;
-                        activeDisplay.textContent = firstNumber;
+                        activeDisplay.textContent = formatToDisplay(firstNumber);
                     } else {
                         firstNumber += buttonPeriod.textContent;
-                        activeDisplay.textContent = firstNumber;
+                        activeDisplay.textContent = formatToDisplay(firstNumber);
                     }
                 }
                 // second number
@@ -382,10 +255,10 @@ window.addEventListener('keydown', (e) => {
                 } else if (secondNumber === '') {
                     secondNumber = '0';
                     secondNumber += buttonPeriod.textContent;
-                    activeDisplay.textContent = secondNumber;
+                    activeDisplay.textContent = formatToDisplay(secondNumber);
                 } else {
                     secondNumber += buttonPeriod.textContent;
-                    activeDisplay.textContent = secondNumber;
+                    activeDisplay.textContent = formatToDisplay(secondNumber);
                 }
             };
             break;
@@ -399,8 +272,8 @@ window.addEventListener('keydown', (e) => {
                 firstNumber = result;
                 result = operate(operatorChoosen, firstNumber, secondNumber);
                 let operatorIcon = operatorChoosen;
-                activeDisplay.textContent = result;
-                miniDisplay.textContent = `${firstNumber} ${operatorIcons[operatorIcon]} ${secondNumber} ${buttonEqual.textContent}`;
+                activeDisplay.textContent = formatToDisplay(result);
+                miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${operatorIcons[operatorIcon]}  ${formatToDisplay(secondNumber)}  ${buttonEqual.textContent}`;
 
                 operatorSelected = true;
                 firstNumber = '';
@@ -413,7 +286,7 @@ window.addEventListener('keydown', (e) => {
                     result = operate(operatorChoosen, firstNumber, secondNumber);
                     if (isNaN(result)) {
                         isError = true;
-                        activeDisplay.textContent = result;
+                        activeDisplay.textContent = formatToDisplay(result);
                         operatorSelected = false;
                         operatorChoosen = '';
                         isCalculated = false;
@@ -421,7 +294,7 @@ window.addEventListener('keydown', (e) => {
                         secondNumber = '';
                     } else {
                         activeDisplay.textContent = result;
-                        miniDisplay.append(secondNumber);
+                        miniDisplay.append(formatToDisplay(secondNumber));
                         miniDisplay.append(buttonEqual.textContent);
                         operatorSelected = false;
                         operatorChoosen = '';
@@ -437,12 +310,12 @@ window.addEventListener('keydown', (e) => {
             if (operatorSelected == false) {
                 if (!(firstNumber == '')) {
                     firstNumber = firstNumber.slice(0, -1);
-                    activeDisplay.textContent = firstNumber;
+                    activeDisplay.textContent = formatToDisplay(firstNumber);
                 }
             } else {
                 if (!(secondNumber == '')) {
                     secondNumber = secondNumber.slice(0, -1);
-                    activeDisplay.textContent = secondNumber;
+                    activeDisplay.textContent = formatToDisplay(secondNumber);
                 }
             }
             break;
@@ -459,208 +332,39 @@ window.addEventListener('keydown', (e) => {
             isError = false;
             break;
     }
-
 });
-
-
 
 // number buttons
 calcNum0.addEventListener('click', function () {
-    if (isError) return;
-
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-
-        } else {
-            firstNumber += calcNum0.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum0.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('0');
 });
 
 calcNum1.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-
-        } else {
-            if (firstNumber.length < MAX_DIGITS) {
-                firstNumber += calcNum1.textContent;
-                activeDisplay.textContent = firstNumber;
-            }
-        }
-
-    } else {
-        
-        activeDisplay.textContent = '';
-        secondNumber += calcNum1.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('1');
 });
 calcNum2.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum2.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum2.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('2');
 });
 calcNum3.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum3.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum3.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('3');
 });
 calcNum4.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum4.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum4.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('4');
 });
 calcNum5.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum5.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum5.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('5');
 });
 calcNum6.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum6.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum6.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('6');
 });
 calcNum7.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum7.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum7.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('7');
 });
 calcNum8.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum8.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum8.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('8');
 });
 calcNum9.addEventListener('click', function () {
-    if (isError) return;
-    if (operatorSelected == false) {
-        if (isCalculated == true) {
-            isCalculated = false;
-            activeDisplay.textContent = '';
-            firstNumber = result;
-            activeDisplay.textContent = firstNumber;
-        } else {
-            firstNumber += calcNum9.textContent;
-            activeDisplay.textContent = firstNumber;
-        }
-
-    } else {
-        activeDisplay.textContent = '';
-        secondNumber += calcNum9.textContent;
-        activeDisplay.append(secondNumber);
-    }
+    appendToActiveNumber('8');
 });
 
 // operator buttons
@@ -682,13 +386,12 @@ buttonBackspace.addEventListener('click', function () {
     if (operatorSelected == false) {
         if (!(firstNumber == '')) {
             firstNumber = firstNumber.slice(0, -1);
-            activeDisplay.textContent = firstNumber;
+            activeDisplay.textContent = formatToDisplay(firstNumber);
         }
-
     } else {
         if (!(secondNumber == '')) {
             secondNumber = secondNumber.slice(0, -1);
-            activeDisplay.textContent = secondNumber;
+            activeDisplay.textContent = formatToDisplay(secondNumber);
         }
     }
 });
@@ -702,8 +405,8 @@ buttonAdd.addEventListener('click', function () {
         result = operate(operatorChoosen, firstNumber, secondNumber);
         firstNumber = result;
         operatorSelected = true;
-        activeDisplay.textContent = result;
-        miniDisplay.textContent = ` ${firstNumber} ${buttonAdd.textContent} `;
+        activeDisplay.textContent = formatToDisplay(result);
+        miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonAdd.textContent} `;
         secondNumber = '';
         isCalculated = true;
 
@@ -711,8 +414,7 @@ buttonAdd.addEventListener('click', function () {
         operatorChoosen = operators.add;
         operatorSelected = true;
         miniDisplay.textContent = "";
-        miniDisplay.append(firstNumber);
-        miniDisplay.append(buttonAdd.textContent);
+        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent}`;
     }
 
 });
@@ -725,16 +427,15 @@ buttonSubtract.addEventListener('click', function () {
 
         firstNumber = result;
         operatorSelected = true;
-        activeDisplay.textContent = result;
-        miniDisplay.textContent = ` ${firstNumber} ${buttonSubtract.textContent} `;
+        activeDisplay.textContent = formatToDisplay(firstNumber);
+        miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent} `;
         secondNumber = '';
         isCalculated = true;
     } else {
         operatorChoosen = operators.subtract;
         operatorSelected = true;
         miniDisplay.textContent = "";
-        miniDisplay.append(firstNumber);
-        miniDisplay.append(buttonSubtract.textContent);
+        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent}`;
     }
 });
 buttonDivide.addEventListener('click', function () {
@@ -745,16 +446,15 @@ buttonDivide.addEventListener('click', function () {
         result = operate(operatorChoosen, firstNumber, secondNumber);
         firstNumber = result;
         operatorSelected = true;
-        activeDisplay.textContent = result;
-        miniDisplay.textContent = ` ${firstNumber} ${buttonDivide.textContent} `;
+        activeDisplay.textContent = formatToDisplay(firstNumber);
+        miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonDivide.textContent} `;
         secondNumber = "";
         isCalculated = true;
     } else {
         operatorChoosen = operators.divide;
         operatorSelected = true;
         miniDisplay.textContent = "";
-        miniDisplay.append(firstNumber);
-        miniDisplay.append(buttonDivide.textContent);
+        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonDivide.textContent}`;
     }
 });
 buttonMultiply.addEventListener('click', function () {
@@ -765,17 +465,16 @@ buttonMultiply.addEventListener('click', function () {
         result = operate(operatorChoosen, firstNumber, secondNumber);
         firstNumber = result;
         operatorSelected = true;
-        activeDisplay.textContent = result;
+        activeDisplay.textContent = formatToDisplay(result);
         miniDisplay.textContent = "";
-        miniDisplay.textContent = ` ${firstNumber} ${buttonMultiply.textContent} `;
+        miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent} `;
         secondNumber = "";
         isCalculated = true;
     } else {
         operatorChoosen = operators.multiply;
         operatorSelected = true;
         miniDisplay.textContent = "";
-        miniDisplay.append(firstNumber);
-        miniDisplay.append(buttonMultiply.textContent);
+        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent}`;
     }
 });
 
@@ -788,17 +487,17 @@ buttonPeriod.addEventListener('click', function () {
             isCalculated = false;
             activeDisplay.textContent = '';
             firstNumber = result;
-            activeDisplay.textContent = firstNumber;
+            activeDisplay.textContent = formatToDisplay(firstNumber);
         } else {
             if (firstNumber.includes('.')) {
                 return;
             } else if (firstNumber === '') {
                 firstNumber = '0';
                 firstNumber += buttonPeriod.textContent;
-                activeDisplay.textContent = firstNumber;
+                activeDisplay.textContent = formatToDisplay(firstNumber);
             } else {
                 firstNumber += buttonPeriod.textContent;
-                activeDisplay.textContent = firstNumber;
+                activeDisplay.textContent = formatToDisplay(firstNumber);
             }
         }
         // second number
@@ -808,10 +507,10 @@ buttonPeriod.addEventListener('click', function () {
         } else if (secondNumber === '') {
             secondNumber = '0';
             secondNumber += buttonPeriod.textContent;
-            activeDisplay.textContent = secondNumber;
+            activeDisplay.textContent = formatToDisplay(secondNumber);
         } else {
             secondNumber += buttonPeriod.textContent;
-            activeDisplay.textContent = secondNumber;
+            activeDisplay.textContent = formatToDisplay(secondNumber);
         }
     };
 });
@@ -825,8 +524,8 @@ buttonEqual.addEventListener('click', function () {
         firstNumber = result;
         result = operate(operatorChoosen, firstNumber, secondNumber);
         let operatorIcon = operatorChoosen;
-        activeDisplay.textContent = result;
-        miniDisplay.textContent = `${firstNumber} ${operatorIcons[operatorIcon]} ${secondNumber} ${buttonEqual.textContent}`;
+        activeDisplay.textContent = formatToDisplay(result);
+        miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${operatorIcons[operatorIcon]}  ${formatToDisplay(secondNumber)}  ${buttonEqual.textContent} `;
 
         operatorSelected = true;
         firstNumber = '';
@@ -835,38 +534,25 @@ buttonEqual.addEventListener('click', function () {
         // for inital calculations
     } else {
         if (!(firstNumber == '' || secondNumber == '')) {
-            activeDisplay.textContent = '';
             result = operate(operatorChoosen, firstNumber, secondNumber);
             if (isNaN(result)) {
                 isError = true;
-                activeDisplay.textContent = result;
+                activeDisplay.textContent = formatToDisplay(result);
                 operatorSelected = false;
                 operatorChoosen = '';
                 isCalculated = false;
                 firstNumber = '';
                 secondNumber = '';
 
-
             } else {
-                activeDisplay.textContent = result;
-                miniDisplay.append(secondNumber);
+                activeDisplay.textContent = formatToDisplay(result);
+                miniDisplay.append(` ${formatToDisplay(secondNumber)} `);
                 miniDisplay.append(buttonEqual.textContent);
                 operatorSelected = false;
                 operatorChoosen = '';
                 isCalculated = false;
-                firstNumber = result;
                 secondNumber = '';
-
             }
         }
     }
 });
-
-//  [x] fix: when equal is clicked twice after an initial calculation 
-//  [x] fix (chain calculations) : when equal is clicked after a chain calc, for example 1 + 1 + 2  then = equal should calculate with what it have and append to the display
-
-
-
-// add: a comma spearator for bigger numbers on the activeDisplay and on the mini display as well
-// [x} add: keyboard support
-

@@ -13,7 +13,7 @@ This is a simple calculator project made for the odin project foundations final 
 
 >**Disclaimer**
 >
->This calculator will not accept number greater than 12 Digits since digits more than 16 or 17 are BigInt and they yeld unexpectedly results.
+>This calculator will not accept number greater than 12 Digits since digits more than 16 or 17 are BigInt and they yeld unexpected results.
 
 Made with 💗.
 

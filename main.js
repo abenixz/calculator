@@ -31,7 +31,7 @@ let operatorIcons = {
     divide: '÷',
 };
 
-let firstNumber = '';
+let firstNumber = '0';
 let secondNumber = '';
 let operatorChosen = '';
 let result;
@@ -39,8 +39,8 @@ let operatorSelected = false;
 let isCalculated = false;
 let miniDisplayContent = '';
 let isError = false;
+let finalResult;
 const MAX_DIGITS = 12;
-
 
 function operate(operator, inputNum1, inputNum2) {
 
@@ -58,16 +58,18 @@ function operate(operator, inputNum1, inputNum2) {
 function formatToDisplay(value) {
     if (!value || value === '-' || isNaN(value)) return value;
     let parts = value.toString().split('.');
-    parts[0] = Number(parts[0]).toLocaleString(); // Adds commas to the whole number part
-    return parts.join('.'); // Keeps the decimal portion safe (e.g., "1,234.56")
+    parts[0] = Number(parts[0]).toLocaleString();
+    return parts.join('.');
 }
 
 function appendToActiveNumber(val) {
     if (isError) return;
+
     if (operatorSelected == false) {
         if (isCalculated == true) {
             isCalculated = false;
             firstNumber = '';
+            miniDisplay.textContent = '';
         }
         if (firstNumber.length < MAX_DIGITS) {
             firstNumber += val;
@@ -81,6 +83,16 @@ function appendToActiveNumber(val) {
     }
 }
 
+function roundResult(value) {
+    if (isNaN(value) || value === null || value === undefined) return value;
+    return parseFloat(Number(value).toFixed(6));
+}
+
+function updateDisplay(value) {
+    let displayValue = (value === '' || value === null || value === undefined) ? '0' : value;
+    activeDisplay.textContent = formatToDisplay(displayValue);
+    return activeDisplay.textContent;
+}
 
 
 let calcNum0 = document.querySelector(".button-0");
@@ -145,22 +157,27 @@ window.addEventListener('keydown', (e) => {
             if (isError) return;
             if (!(secondNumber == '')) {
                 activeDisplay.textContent = '';
+
                 result = operate(operatorChosen, firstNumber, secondNumber);
                 operatorChosen = operators.add;
                 firstNumber = result;
 
-                operatorSelected = true;
                 activeDisplay.textContent = formatToDisplay(result);
-                miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent} `;
-                secondNumber = '';
-                isCalculated = true;
+                miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonAdd.textContent} `;
 
-            } else {
-                operatorChosen = operators.add;
+                secondNumber = '';
                 operatorSelected = true;
-                miniDisplay.textContent = "";
-                miniDisplay.append(formatToDisplay(firstNumber));
-                miniDisplay.append(buttonAdd.textContent);
+                isCalculated = true;
+            } else {
+                if (!(firstNumber == '')) {
+                    operatorChosen = operators.add;
+                    operatorSelected = true;
+                    miniDisplay.textContent = "";
+                    miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent}`;
+                    console.log(firstNumber, secondNumber, result);
+                } else {
+                    return;
+                }
             }
             break;
         case '-':
@@ -177,11 +194,14 @@ window.addEventListener('keydown', (e) => {
                 secondNumber = '';
                 isCalculated = true;
             } else {
-                operatorChosen = operators.subtract;
-                operatorSelected = true;
-                miniDisplay.textContent = "";
-                miniDisplay.append(formatToDisplay(firstNumber));
-                miniDisplay.append(buttonSubtract.textContent);
+                if (!(firstNumber == '')) {
+                    operatorChosen = operators.subtract;
+                    operatorSelected = true;
+                    miniDisplay.textContent = "";
+                    miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent}`;
+                } else {
+                    return;
+                }
             }
             break;
         case '*':
@@ -199,11 +219,14 @@ window.addEventListener('keydown', (e) => {
                 secondNumber = "";
                 isCalculated = true;
             } else {
-                operatorChosen = operators.multiply;
-                operatorSelected = true;
-                miniDisplay.textContent = "";
-                miniDisplay.append(formatToDisplay(firstNumber));
-                miniDisplay.append(buttonMultiply.textContent);
+                if (!(firstNumber == '')) {
+                    operatorChosen = operators.multiply;
+                    operatorSelected = true;
+                    miniDisplay.textContent = "";
+                    miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent}`;
+                } else {
+                    return;
+                }
             }
             break;
         case '/':
@@ -220,11 +243,14 @@ window.addEventListener('keydown', (e) => {
                 secondNumber = "";
                 isCalculated = true;
             } else {
-                operatorChosen = operators.divide;
-                operatorSelected = true;
-                miniDisplay.textContent = "";
-                miniDisplay.append(formatToDisplay(firstNumber));
-                miniDisplay.append(buttonDivide.textContent);
+                if (!(firstNumber == '')) {
+                    operatorChosen = operators.divide;
+                    operatorSelected = true;
+                    miniDisplay.textContent = "";
+                    miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonDivide.textContent}`;
+                } else {
+                    return;
+                }
             }
             break;
         case ".":
@@ -270,21 +296,20 @@ window.addEventListener('keydown', (e) => {
             if (isCalculated == true) {
                 activeDisplay.textContent = '';
                 miniDisplay.textContent = '';
-                firstNumber = result;
+                firstNumber = roundResult(result);
                 result = operate(operatorChosen, firstNumber, secondNumber);
                 let operatorIcon = operatorChosen;
-                activeDisplay.textContent = formatToDisplay(result);
-                miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${operatorIcons[operatorIcon]}  ${formatToDisplay(secondNumber)}  ${buttonEqual.textContent}`;
-
+                activeDisplay.textContent = formatToDisplay(Number(result.toFixed(6)));
+                miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${operatorIcons[operatorIcon]}  ${formatToDisplay(secondNumber)}  ${buttonEqual.textContent} `;
                 operatorSelected = true;
-                firstNumber = '';
-                secondNumber = '';
+                isCalculated = true;
 
                 // for initial calculations
             } else {
                 if (!(firstNumber == '' || secondNumber == '')) {
-                    activeDisplay.textContent = '';
                     result = operate(operatorChosen, firstNumber, secondNumber);
+                    finalResult = roundResult(result);
+
                     if (isNaN(result)) {
                         isError = true;
                         activeDisplay.textContent = formatToDisplay(result);
@@ -293,14 +318,15 @@ window.addEventListener('keydown', (e) => {
                         isCalculated = false;
                         firstNumber = '';
                         secondNumber = '';
+
                     } else {
-                        activeDisplay.textContent = result;
-                        miniDisplay.append(formatToDisplay(secondNumber));
+                        activeDisplay.textContent = formatToDisplay(finalResult);
+                        miniDisplay.append(` ${formatToDisplay(secondNumber)} `);
                         miniDisplay.append(buttonEqual.textContent);
                         operatorSelected = false;
                         operatorChosen = '';
-                        isCalculated = false;
-                        firstNumber = result;
+                        isCalculated = true;
+                        firstNumber = finalResult;
                         secondNumber = '';
                     }
                 }
@@ -311,26 +337,31 @@ window.addEventListener('keydown', (e) => {
             if (operatorSelected == false) {
                 if (!(firstNumber == '')) {
                     firstNumber = firstNumber.slice(0, -1);
+                    if (firstNumber === '' || firstNumber === '-') {
+                        firstNumber = '0';
+                    }
                     activeDisplay.textContent = formatToDisplay(firstNumber);
                 }
             } else {
                 if (!(secondNumber == '')) {
                     secondNumber = secondNumber.slice(0, -1);
+                    if (secondNumber === '' || secondNumber === '-') {
+                        secondNumber = '0';
+                    }
                     activeDisplay.textContent = formatToDisplay(secondNumber);
                 }
             }
             break;
         case "Escape":
-            activeDisplay.textContent = '';
             miniDisplay.textContent = '';
-            firstNumber = '';
+            firstNumber = '0';
             secondNumber = '';
             operatorChosen = '';
             result = '';
             operatorSelected = false;
-            operatorSelected = false;
             isCalculated = false;
             isError = false;
+            updateDisplay(firstNumber);
             break;
     }
 });
@@ -370,16 +401,16 @@ calcNum9.addEventListener('click', function () {
 
 // operator buttons
 buttonClear.addEventListener('click', function () {
-    activeDisplay.textContent = '';
+
     miniDisplay.textContent = '';
-    firstNumber = '';
+    firstNumber = '0';
     secondNumber = '';
     operatorChosen = '';
     result = '';
     operatorSelected = false;
-    operatorSelected = false;
     isCalculated = false;
     isError = false;
+    updateDisplay(firstNumber);
 });
 buttonBackspace.addEventListener('click', function () {
     if (isError) return;
@@ -387,11 +418,17 @@ buttonBackspace.addEventListener('click', function () {
     if (operatorSelected == false) {
         if (!(firstNumber == '')) {
             firstNumber = firstNumber.slice(0, -1);
+            if (firstNumber === '' || firstNumber === '-') {
+                firstNumber = '0';
+            }
             activeDisplay.textContent = formatToDisplay(firstNumber);
         }
     } else {
         if (!(secondNumber == '')) {
             secondNumber = secondNumber.slice(0, -1);
+            if (secondNumber === '' || secondNumber === '-') {
+                secondNumber = '0';
+            }
             activeDisplay.textContent = formatToDisplay(secondNumber);
         }
     }
@@ -399,7 +436,6 @@ buttonBackspace.addEventListener('click', function () {
 
 buttonAdd.addEventListener('click', function () {
     if (isError) return;
-
     if (!(secondNumber == '')) {
         activeDisplay.textContent = '';
 
@@ -407,19 +443,23 @@ buttonAdd.addEventListener('click', function () {
         operatorChosen = operators.add;
         firstNumber = result;
 
-        operatorSelected = true;
         activeDisplay.textContent = formatToDisplay(result);
         miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonAdd.textContent} `;
+
         secondNumber = '';
-        isCalculated = true;
-
-    } else {
-        operatorChosen = operators.add;
         operatorSelected = true;
-        miniDisplay.textContent = "";
-        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent}`;
+        isCalculated = true;
+    } else {
+        if (!(firstNumber == '')) {
+            operatorChosen = operators.add;
+            operatorSelected = true;
+            miniDisplay.textContent = "";
+            miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonAdd.textContent}`;
+            console.log(firstNumber, secondNumber, result);
+        } else {
+            return;
+        }
     }
-
 });
 buttonSubtract.addEventListener('click', function () {
     if (isError) return;
@@ -436,10 +476,14 @@ buttonSubtract.addEventListener('click', function () {
         secondNumber = '';
         isCalculated = true;
     } else {
-        operatorChosen = operators.subtract;
-        operatorSelected = true;
-        miniDisplay.textContent = "";
-        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent}`;
+        if (!(firstNumber == '')) {
+            operatorChosen = operators.subtract;
+            operatorSelected = true;
+            miniDisplay.textContent = "";
+            miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonSubtract.textContent}`;
+        } else {
+            return;
+        }
     }
 });
 buttonDivide.addEventListener('click', function () {
@@ -452,37 +496,43 @@ buttonDivide.addEventListener('click', function () {
         firstNumber = result;
 
         operatorSelected = true;
-        activeDisplay.textContent = formatToDisplay(firstNumber);
+        activeDisplay.textContent = formatToDisplay(Number(result.toFixed(6)));
         miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonDivide.textContent} `;
         secondNumber = "";
         isCalculated = true;
     } else {
-        operatorChosen = operators.divide;
-        operatorSelected = true;
-        miniDisplay.textContent = "";
-        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonDivide.textContent}`;
+        if (!(firstNumber == '')) {
+            operatorChosen = operators.divide;
+            operatorSelected = true;
+            miniDisplay.textContent = "";
+            miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonDivide.textContent}`;
+        } else {
+            return;
+        }
     }
 });
 buttonMultiply.addEventListener('click', function () {
     if (isError) return;
     if (!(secondNumber == '')) {
         activeDisplay.textContent = '';
-
         result = operate(operatorChosen, firstNumber, secondNumber);
         operatorChosen = operators.multiply;
-        firstNumber = result;
-
+        firstNumber = roundResult(result);
         operatorSelected = true;
-        activeDisplay.textContent = formatToDisplay(result);
+        activeDisplay.textContent = formatToDisplay(firstNumber);
         miniDisplay.textContent = "";
         miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent} `;
         secondNumber = "";
         isCalculated = true;
     } else {
-        operatorChosen = operators.multiply;
-        operatorSelected = true;
-        miniDisplay.textContent = "";
-        miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent}`;
+        if (!(firstNumber == '')) {
+            operatorChosen = operators.multiply;
+            operatorSelected = true;
+            miniDisplay.textContent = "";
+            miniDisplay.textContent = `${formatToDisplay(firstNumber)}  ${buttonMultiply.textContent}`;
+        } else {
+            return;
+        }
     }
 });
 
@@ -494,7 +544,7 @@ buttonPeriod.addEventListener('click', function () {
             // first number for a second calculation is set to the result of the previous operation
             isCalculated = false;
             activeDisplay.textContent = '';
-            firstNumber = result;
+            firstNumber = roundResult(result);
             activeDisplay.textContent = formatToDisplay(firstNumber);
         } else {
             if (firstNumber.includes('.')) {
@@ -529,20 +579,20 @@ buttonEqual.addEventListener('click', function () {
     if (isCalculated == true) {
         activeDisplay.textContent = '';
         miniDisplay.textContent = '';
-        firstNumber = result;
+        firstNumber = roundResult(result);
         result = operate(operatorChosen, firstNumber, secondNumber);
         let operatorIcon = operatorChosen;
-        activeDisplay.textContent = formatToDisplay(result);
+        activeDisplay.textContent = formatToDisplay(Number(result.toFixed(6)));
         miniDisplay.textContent = ` ${formatToDisplay(firstNumber)}  ${operatorIcons[operatorIcon]}  ${formatToDisplay(secondNumber)}  ${buttonEqual.textContent} `;
-
         operatorSelected = true;
-        firstNumber = '';
-        secondNumber = '';
+        isCalculated = true;
 
         // for initial calculations
     } else {
         if (!(firstNumber == '' || secondNumber == '')) {
             result = operate(operatorChosen, firstNumber, secondNumber);
+            finalResult = roundResult(result);
+
             if (isNaN(result)) {
                 isError = true;
                 activeDisplay.textContent = formatToDisplay(result);
@@ -553,14 +603,25 @@ buttonEqual.addEventListener('click', function () {
                 secondNumber = '';
 
             } else {
-                activeDisplay.textContent = formatToDisplay(result);
+                activeDisplay.textContent = formatToDisplay(finalResult);
                 miniDisplay.append(` ${formatToDisplay(secondNumber)} `);
                 miniDisplay.append(buttonEqual.textContent);
                 operatorSelected = false;
                 operatorChosen = '';
-                isCalculated = false;
+                isCalculated = true;
+                firstNumber = finalResult;
                 secondNumber = '';
             }
         }
     }
 });
+
+updateDisplay(firstNumber);
+
+
+// [x]: calculations with chained operators does not work as intended  ("12 + 7 -" should yeld 19 as the first number when the second operator but it rather calculates the subtraction discarding the addition)
+// [x]: long decimal overflow our activeDisplay - consider rounding
+// [x]: pressing a new digit after a calculation after using equal should wipe all the displays clean
+// [x]: when operator is clicked before first number nothing should happen (such as appending to both displays)
+// [x]: add an initial 0 on the active display, in which clear and delete lands at
+// [ ]: favicon is not showing on the live site (vercel)

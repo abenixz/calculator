@@ -617,11 +617,3 @@ buttonEqual.addEventListener('click', function () {
 });
 
 updateDisplay(firstNumber);
-
-
-// [x]: calculations with chained operators does not work as intended  ("12 + 7 -" should yeld 19 as the first number when the second operator but it rather calculates the subtraction discarding the addition)
-// [x]: long decimal overflow our activeDisplay - consider rounding
-// [x]: pressing a new digit after a calculation after using equal should wipe all the displays clean
-// [x]: when operator is clicked before first number nothing should happen (such as appending to both displays)
-// [x]: add an initial 0 on the active display, in which clear and delete lands at
-// [ ]: favicon is not showing on the live site (vercel)
